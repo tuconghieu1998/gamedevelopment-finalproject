@@ -9,6 +9,9 @@ public class InputController : MonoBehaviour
     public Vector2 MouseInput;
     public bool Fire1;
     public bool Reload;
+    public bool isWalking;
+    public bool isSprinting;
+    public bool isCrouched;
 
     void Update()
     {
@@ -17,5 +20,8 @@ public class InputController : MonoBehaviour
         MouseInput = new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
         Fire1 = Input.GetButton("Fire1");
         Reload = Input.GetKey(KeyCode.R);
+        isWalking = Input.GetKey(KeyCode.LeftAlt);
+        isSprinting = Input.GetKey(KeyCode.LeftShift);
+        isCrouched = Input.GetKey(KeyCode.C);
     }
 }
