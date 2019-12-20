@@ -22,6 +22,6 @@ public class InputController : MonoBehaviour
         Reload = Input.GetKey(KeyCode.R);
         isWalking = Input.GetKey(KeyCode.LeftAlt);
         isSprinting = Input.GetKey(KeyCode.LeftShift);
-        isCrouched = Input.GetKey(KeyCode.C);
+        isCrouched = Input.GetKey(KeyCode.Space);
     }
 }
