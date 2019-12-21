@@ -40,11 +40,15 @@ public class Container : MonoBehaviour
     }
 
     public List<ContainerItem> items;
+    public event System.Action OnContainerReady;
 
     void Awake()
     {
         items = new List<ContainerItem>();
-        
+        if (OnContainerReady != null)
+        {
+            OnContainerReady();
+        }
     }
 
     public System.Guid Add(string name, int maximum)
