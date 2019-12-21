@@ -7,10 +7,11 @@ public class WeaponReloader : MonoBehaviour
     [SerializeField] int maxAmmo;
     [SerializeField] float reloadTime;
     [SerializeField] int clipSize;
+    [SerializeField] Container inventory;
 
-    int ammo;
     public int shotsFiredInClip;
     bool isReloading;
+    System.Guid containerItemId;
 
     public int RoundsRemainingInClip
     {
@@ -28,26 +29,27 @@ public class WeaponReloader : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        containerItemId = inventory.Add(this.name, maxAmmo);
+    }
+
     public void Reload()
     {
         if (isReloading)
             return;
         isReloading = true;
-        print("Reload started");
-        GameManager.Instance.Timer.Add(ExecuteReLoad, reloadTime);
+        int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
+
+        GameManager.Instance.Timer.Add(()=> {
+            ExecuteReLoad(inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip));
+        }, reloadTime);
     }
 
-    private void ExecuteReLoad()
+    private void ExecuteReLoad(int amount)
     {
-        print("Reload executed");
         isReloading = false;
-        ammo -= shotsFiredInClip;
-        shotsFiredInClip = 0;
-        if(ammo < 0)
-        {
-            ammo = 0;
-            shotsFiredInClip += -ammo;
-        }
+        shotsFiredInClip -= amount;
     }
 
     public void TakeFromClip(int amount)
