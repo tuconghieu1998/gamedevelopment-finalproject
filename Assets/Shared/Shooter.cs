@@ -14,12 +14,17 @@ public class Shooter : MonoBehaviour
     public bool canFire;
     Transform muzzle;
 
+    public void Equip()
+    {
+        transform.SetParent(hand);
+        transform.localPosition = Vector3.zero;
+        transform.localRotation = Quaternion.identity;
+    }
+
     void Awake()
     {
-        muzzle = transform.Find("Muzzle");
-        reloader = GetComponent<WeaponReloader>();
-
-        transform.SetParent(hand);
+        muzzle = transform.Find("Model/Muzzle");
+        reloader = GetComponent<WeaponReloader>(); 
     }
 
     public void Reload()
