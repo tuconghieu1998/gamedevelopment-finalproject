@@ -29,6 +29,10 @@ public class ThirdPersonCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(localPlayer == null)
+        {
+            return;
+        }
         Vector3 targetPosition = cameraLookTarget.position + localPlayer.transform.forward * cameraOffset.z +
             localPlayer.transform.up * cameraOffset.y +
             localPlayer.transform.right * cameraOffset.x;

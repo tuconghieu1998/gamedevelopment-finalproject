@@ -23,6 +23,17 @@ public class Player : MonoBehaviour
 
     Vector3 previousPosition;
 
+    private PlayerShoot m_PlayerShoot;
+    public PlayerShoot PlayerShoot
+    {
+        get
+        {
+            if (m_PlayerShoot == null)
+                m_PlayerShoot = GetComponent<PlayerShoot>();
+            return m_PlayerShoot;
+        }
+    }
+
     private MoveController m_MoveController;
     public MoveController MoveController
     {

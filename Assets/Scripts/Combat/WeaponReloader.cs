@@ -13,11 +13,21 @@ public class WeaponReloader : MonoBehaviour
     bool isReloading;
     System.Guid containerItemId;
 
+    public event System.Action OnAmmoChanged;
+
     public int RoundsRemainingInClip
     {
         get
         {
             return clipSize - shotsFiredInClip;
+        }
+    }
+
+    public int RoundsRemainingInInventory
+    {
+        get
+        {
+            return inventory.GetAmountRemaining(containerItemId);
         }
     }
 
@@ -42,21 +52,30 @@ public class WeaponReloader : MonoBehaviour
         if (isReloading)
             return;
         isReloading = true;
-        int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
+        // int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
 
         GameManager.Instance.Timer.Add(()=> {
             ExecuteReLoad(inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip));
         }, reloadTime);
+        
     }
 
     private void ExecuteReLoad(int amount)
     {
         isReloading = false;
         shotsFiredInClip -= amount;
+        if (OnAmmoChanged != null)
+        {
+            OnAmmoChanged();
+        }
     }
 
     public void TakeFromClip(int amount)
     {
         shotsFiredInClip += amount;
+        if (OnAmmoChanged != null)
+        {
+            OnAmmoChanged();
+        }
     }
 }

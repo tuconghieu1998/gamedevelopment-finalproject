@@ -7,8 +7,10 @@ public class Shooter : MonoBehaviour
     [SerializeField] float rateOfFire;
     [SerializeField] Projectile projectile;
     [SerializeField] Transform hand;
+    [SerializeField] AudioController audioReload;
+    [SerializeField] AudioController audioFire;
 
-    private WeaponReloader reloader;
+    public WeaponReloader reloader;
 
     float nextFireAllowed;
     public bool canFire;
@@ -34,6 +36,7 @@ public class Shooter : MonoBehaviour
             return;
         }
         reloader.Reload();
+        audioReload.Play();
     }
 
     public virtual void Fire()
@@ -58,7 +61,7 @@ public class Shooter : MonoBehaviour
 
         // instantiate the projectile
         Instantiate(projectile, muzzle.position, muzzle.rotation);
-
+        audioFire.Play();
         canFire = true;
     }
 }
