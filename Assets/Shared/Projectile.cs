@@ -18,9 +18,14 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward, out hit, 5f))
+        {
+            CheckDestructable(hit.transform);
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CheckDestructable(Transform other)
     {
         var destructable = other.transform.GetComponent<Destructable>();
         if(destructable == null)
