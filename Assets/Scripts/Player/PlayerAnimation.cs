@@ -5,6 +5,18 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     Animator animator;
+    private PlayerAim m_playerAim;
+    public PlayerAim PlayerAim
+    {
+        get
+        {
+            if(m_playerAim == null)
+            {
+                m_playerAim = GameManager.Instance.LocalPlayer.playerAim;
+            }
+            return m_playerAim;
+        }
+    }
 
     void Awake()
     {
@@ -20,5 +32,7 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("IsWalking", GameManager.Instance.InputController.isWalking);
         animator.SetBool("IsSprinting", GameManager.Instance.InputController.isSprinting);
         animator.SetBool("IsCrouched", GameManager.Instance.InputController.isCrouched);
+
+        animator.SetFloat("AimAngle", PlayerAim.GetAngle());
     }
 }

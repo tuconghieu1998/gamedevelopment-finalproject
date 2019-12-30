@@ -21,6 +21,8 @@ public class Player : MonoBehaviour
     [SerializeField] AudioController footSteps;
     [SerializeField] float minimumMoveTreshold;
 
+    public PlayerAim playerAim;
+
     Vector3 previousPosition;
 
     private PlayerShoot m_PlayerShoot;
@@ -116,5 +118,6 @@ public class Player : MonoBehaviour
         transform.Rotate(Vector3.up * mouseInput.x * MouseControl.Sensitivity.x);
 
         Crosshair.LookHeight(mouseInput.y * MouseControl.Sensitivity.y);
+        playerAim.SetRotation(mouseInput.y * MouseControl.Sensitivity.y);
     }
 }
