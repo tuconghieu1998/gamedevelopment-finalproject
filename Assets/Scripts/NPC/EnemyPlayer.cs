@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PathFinder))]
+[RequireComponent(typeof(EnemyHealth))]
 public class EnemyPlayer : MonoBehaviour
 {
     PathFinder pathFinder;
@@ -10,9 +11,25 @@ public class EnemyPlayer : MonoBehaviour
     Player priorityTarget;
     List<Player> myTargets;
 
+    [SerializeField] SwatSoldier settings;
+
+    private EnemyHealth m_EnemyHealth;
+    public EnemyHealth EnemyHealth
+    {
+        get
+        {
+            if(m_EnemyHealth == null)
+            {
+                m_EnemyHealth = GetComponent<EnemyHealth>();
+            }
+            return m_EnemyHealth;
+        }
+    }
+
     private void Start()
     {
         pathFinder = GetComponent<PathFinder>();
+        pathFinder.Agent.speed = settings.RunSpeed;
         playerScanner.OnScanReady += Scanner_OnScanReady;
         Scanner_OnScanReady();
     }

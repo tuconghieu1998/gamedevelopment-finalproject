@@ -14,10 +14,7 @@ public class Player : MonoBehaviour
         public bool LockMouse;
     }
 
-    [SerializeField] float runSpeed;
-    [SerializeField] float walkSpeed;
-    [SerializeField] float crouchSpeed;
-    [SerializeField] float sprintSpeed;
+    [SerializeField] SwatSoldier settings;
     [SerializeField] MouseInput MouseControl;
     [SerializeField] AudioController footSteps;
     [SerializeField] float minimumMoveTreshold;
@@ -86,24 +83,24 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        float moveSpeed = runSpeed;
+        float moveSpeed = settings.RunSpeed;
         if (playerInput.isWalking)
         {
-            moveSpeed = walkSpeed;
+            moveSpeed = settings.WalkSpeed;
         }
 
         if (playerInput.isSprinting)
         {
-            moveSpeed = sprintSpeed;
+            moveSpeed = settings.SprintSpeed;
         }
 
         if (playerInput.isCrouched)
         {
-            moveSpeed = crouchSpeed;
+            moveSpeed = settings.CrouchSpeed;
         }
 
         Vector2 direction = new Vector2(playerInput.Vertical * moveSpeed, playerInput.Horizontal * moveSpeed);
-        MoveController.Move(transform.forward * direction.x * .02f + transform.right * direction.y * .02f);
+        MoveController.SimpleMove(transform.forward * direction.x + transform.right * direction.y);
 
         if (Vector3.Distance(transform.position, previousPosition) > minimumMoveTreshold)
         {

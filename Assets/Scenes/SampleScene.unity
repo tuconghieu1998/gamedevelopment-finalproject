@@ -2411,6 +2411,7 @@ GameObject:
   - component: {fileID: 907644144}
   - component: {fileID: 907644145}
   - component: {fileID: 907644140}
+  - component: {fileID: 907644141}
   m_Layer: 0
   m_Name: EnemyPlayer
   m_TagString: Untagged
@@ -2447,6 +2448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerScanner: {fileID: 767770621}
+  settings: {fileID: 11400000, guid: 6b79fe8eb1a9e584692d4d75b6606ac7, type: 2}
 --- !u!136 &907644140
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2461,6 +2463,20 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.88, z: 0}
+--- !u!114 &907644141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907644137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148ac7ab0d93eb54d9dd33a3d2a7061b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitPoints: 3
+  ragdoll: {fileID: 873045163}
 --- !u!114 &907644142
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2504,7 +2520,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907644137}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: adb704193eb03594080214dac9a5c7cc, type: 3}
   m_Name: 
@@ -9552,7 +9568,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854359537}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.02}
+  m_LocalPosition: {x: 3.91, y: 0, z: -40.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 748522900}
@@ -9576,10 +9592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 217457c2287792e48bc828d308a4bc36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 5
-  walkSpeed: 2
-  crouchSpeed: 1
-  sprintSpeed: 8
+  settings: {fileID: 11400000, guid: 6b79fe8eb1a9e584692d4d75b6606ac7, type: 2}
   MouseControl:
     Damping: {x: 5, y: 2}
     Sensitivity: {x: 2, y: 6}
