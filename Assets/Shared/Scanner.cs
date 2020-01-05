@@ -10,49 +10,32 @@ public class Scanner : MonoBehaviour
     [SerializeField] LayerMask mask;
 
     SphereCollider rangeTrigger;
-    List<Player> targets;
-    Player m_selectedTarget;
-    Player selectedTarget
+    public float ScanRange
     {
         get
         {
-            return m_selectedTarget;
-        }
-        set
-        {
-            m_selectedTarget = value;
-            if (m_selectedTarget == null)
-                return;
-            if (OnTargetSelected != null)
+            if (rangeTrigger == null)
             {
-                OnTargetSelected(m_selectedTarget.transform.position);
+                rangeTrigger = GetComponent<SphereCollider>();
             }
+            return rangeTrigger.radius;
         }
     }
 
-    public event System.Action<Vector3> OnTargetSelected;
-
-    private void Start()
-    {
-        rangeTrigger = GetComponent<SphereCollider>();
-        targets = new List<Player>();
-        PrepareScan();
-    }
+    public event System.Action OnScanReady;
 
     void PrepareScan()
     {
-        if (selectedTarget != null)
-            return;
-        GameManager.Instance.Timer.Add(ScanForTargets, scanSpeed);
+        GameManager.Instance.Timer.Add(()=> {
+            if (OnScanReady != null)
+            {
+                OnScanReady();
+            }
+        }, scanSpeed);
     }
 
     void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        if(selectedTarget != null)
-        {
-            Gizmos.DrawLine(transform.position, selectedTarget.transform.position);
-        }
+    {   
         Gizmos.color = Color.green;
         Gizmos.DrawLine(transform.position, transform.position + GetViewAngle(fieldOfView / 2) * 
             GetComponent<SphereCollider>().radius);
@@ -66,39 +49,22 @@ public class Scanner : MonoBehaviour
         return new Vector3(Mathf.Sin(radian),0, Mathf.Cos(radian));
     }
 
-    void ScanForTargets()
+    public List<T> ScanForTargets<T>()
     {
-        Collider[] results = Physics.OverlapSphere(transform.position, rangeTrigger.radius);
+        List<T> targets = new List<T>();
+        Collider[] results = Physics.OverlapSphere(transform.position, ScanRange);
         for(int i = 0; i < results.Length; i++)
         {
-            var player = results[i].transform.GetComponent<Player>();
+            var player = results[i].transform.GetComponent<T>();
             if (player == null) 
                 continue;
-            if (!IsInLineOfSight(Vector3.up, player.transform.position))
+            if (!IsInLineOfSight(Vector3.up, results[i].transform.position))
                 continue;
 
             targets.Add(player);
         }
-        if(targets.Count == 1)
-        {
-            selectedTarget = targets[0];
-        }
-        else
-        {
-            //lấy mục tiêu gần nhất
-            float closestTarget = rangeTrigger.radius;
-            foreach(var possibleTarget in targets)
-            {
-                if(Vector3.Distance(transform.position,possibleTarget.transform.position) < closestTarget)
-                {
-                    selectedTarget = possibleTarget;
-                    //update lại khoảng cách
-                    closestTarget = Vector3.Distance(transform.position, selectedTarget.transform.position);
-                }
-            }
-        }
         PrepareScan();
-
+        return targets;
     }
 
     bool IsInLineOfSight(Vector3 eyeHeight, Vector3 targetPosition)

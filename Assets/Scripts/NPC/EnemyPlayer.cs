@@ -3,21 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PathFinder))]
-[RequireComponent(typeof(Scanner))]
 public class EnemyPlayer : MonoBehaviour
 {
     PathFinder pathFinder;
-    Scanner scanner;
+    [SerializeField] Scanner playerScanner;
+    Player priorityTarget;
+    List<Player> myTargets;
 
     private void Start()
     {
         pathFinder = GetComponent<PathFinder>();
-        scanner = GetComponent<Scanner>();
-        scanner.OnTargetSelected += Scanner_OnTargetSelected;
+        playerScanner.OnScanReady += Scanner_OnScanReady;
+        Scanner_OnScanReady();
     }
 
-    private void Scanner_OnTargetSelected(Vector3 position)
+    private void Scanner_OnScanReady()
     {
-        pathFinder.SetTarget(position);
+        if (priorityTarget != null)
+            return;
+        myTargets = playerScanner.ScanForTargets<Player>();
+        if(myTargets.Count == 1)
+        {
+            priorityTarget = myTargets[0];
+        }
+        else
+        {
+            SelectClosestTarget();
+        }
+        if (priorityTarget != null)
+        {
+            SetDestinationToPriorityTarget();
+        }
+    }
+
+    private void SetDestinationToPriorityTarget()
+    {
+        pathFinder.SetTarget(priorityTarget.transform.position);
+    }
+
+    private void SelectClosestTarget()
+    {
+        float closestTarget = playerScanner.ScanRange;
+        foreach(var possibleTarget in myTargets)
+        {
+            if (Vector3.Distance(transform.position, possibleTarget.transform.position) < closestTarget)
+            {
+                priorityTarget = possibleTarget;
+            }
+        }
     }
 }
