@@ -21,24 +21,23 @@ public class PathFinder : MonoBehaviour
             m_destinationReached = value;
             if (m_destinationReached)
             {
-                if(OnDestinationReached != null)
-                {
+                if(OnDestinationReached!=null)
                     OnDestinationReached();
-                }
             }
         }
     }
 
     public event System.Action OnDestinationReached;
 
-    private void Start()
+    private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
     }
 
     public void SetTarget(Vector3 target)
     {
-        Agent.SetDestination(target);
+        destinationReached = false;
+        Agent.SetDestination(target);        
     }
 
     private void Update()
