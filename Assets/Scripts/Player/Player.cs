@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerState))]
+[RequireComponent(typeof(PlayerHealth))]
 public class Player : MonoBehaviour
 {
     [System.Serializable]
@@ -60,6 +61,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private PlayerHealth m_PlayerHealth;
+    public PlayerHealth PlayerHealth
+    {
+        get
+        {
+            if (m_PlayerHealth == null)
+            {
+                m_PlayerHealth = GetComponent<PlayerHealth>();
+            }
+            return m_PlayerHealth;
+        }
+    }
+
     InputController playerInput;
     Vector2 mouseInput;
 
@@ -77,6 +91,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!PlayerHealth.isAlive)
+            return;
         Move();
         LookAround();
     }   

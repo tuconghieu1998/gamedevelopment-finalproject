@@ -5,13 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(PathFinder))]
 [RequireComponent(typeof(EnemyHealth))]
 public class EnemyPlayer : MonoBehaviour
-{
-    PathFinder pathFinder;
+{   
     [SerializeField] Scanner playerScanner;
+    [SerializeField] SwatSoldier settings;
+
+    PathFinder pathFinder;
     Player priorityTarget;
     List<Player> myTargets;
 
-    [SerializeField] SwatSoldier settings;
+    public event System.Action<Player> OnTargetSelected;
 
     private EnemyHealth m_EnemyHealth;
     public EnemyHealth EnemyHealth
@@ -29,9 +31,15 @@ public class EnemyPlayer : MonoBehaviour
     private void Start()
     {
         pathFinder = GetComponent<PathFinder>();
-        pathFinder.Agent.speed = settings.RunSpeed;
+        pathFinder.Agent.speed = settings.WalkSpeed;
         playerScanner.OnScanReady += Scanner_OnScanReady;
         Scanner_OnScanReady();
+        EnemyHealth.OnDeath += EnemyHealth_OnDeath;
+    }
+
+    private void EnemyHealth_OnDeath()
+    {
+        throw new System.NotImplementedException();
     }
 
     private void Scanner_OnScanReady()
@@ -49,14 +57,14 @@ public class EnemyPlayer : MonoBehaviour
         }
         if (priorityTarget != null)
         {
-            SetDestinationToPriorityTarget();
+            if (OnTargetSelected != null)
+            {
+                OnTargetSelected(priorityTarget);
+            }
         }
     }
 
-    private void SetDestinationToPriorityTarget()
-    {
-        pathFinder.SetTarget(priorityTarget.transform.position);
-    }
+    
 
     private void SelectClosestTarget()
     {
@@ -68,5 +76,14 @@ public class EnemyPlayer : MonoBehaviour
                 priorityTarget = possibleTarget;
             }
         }
+    }
+
+    private void Update()
+    {
+        if(priorityTarget == null)
+        {
+            return;
+        }
+        transform.LookAt(priorityTarget.transform.position);
     }
 }

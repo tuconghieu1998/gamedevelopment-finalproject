@@ -75,7 +75,7 @@ public class Scanner : MonoBehaviour
             float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
 
             //bị cản tầm nhìn
-            if (Physics.Raycast(transform.position + eyeHeight, direction.normalized, distanceToTarget, mask))
+            if (Physics.Raycast(transform.position + eyeHeight +transform.forward*.3f, direction.normalized, distanceToTarget, mask))
             {
                 return false;
             }

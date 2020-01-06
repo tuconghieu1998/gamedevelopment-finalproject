@@ -9,7 +9,9 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] AudioController audioReload;
     [SerializeField] AudioController audioFire;
-    [SerializeField] Transform aimTarget;
+    
+    public Transform AimTarget;
+    public Vector3 AimTargetOffset;
 
     public WeaponReloader reloader;
     private ParticleSystem muzzleFireParticleSystem;
@@ -68,7 +70,7 @@ public class Shooter : MonoBehaviour
             reloader.TakeFromClip(1);
         }
         nextFireAllowed = Time.time + rateOfFire;
-        muzzle.LookAt(aimTarget);
+        muzzle.LookAt(AimTarget.position + AimTargetOffset);
         FireEffect();
 
         // instantiate the projectile

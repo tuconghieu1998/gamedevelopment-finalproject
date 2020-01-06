@@ -35,6 +35,12 @@ public class EnemyPatrol : MonoBehaviour
         pathFinder.OnDestinationReached += PathFinder_OnDestinationReached;
         waypointController.OnWaypointChanged += WaypointController_OnWaypointChanged;
         EnemyPlayer.EnemyHealth.OnDeath += EnemyHealth_OnDeath;
+        EnemyPlayer.OnTargetSelected += EnemyPlayer_OnTargetSelected;
+    }
+
+    private void EnemyPlayer_OnTargetSelected(Player obj)
+    {
+        pathFinder.Agent.isStopped = true;
     }
 
     private void EnemyHealth_OnDeath()
