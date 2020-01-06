@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PathFinder))]
 [RequireComponent(typeof(EnemyHealth))]
+[RequireComponent(typeof(EnemyState))]
 public class EnemyPlayer : MonoBehaviour
 {   
     [SerializeField] Scanner playerScanner;
@@ -28,6 +29,19 @@ public class EnemyPlayer : MonoBehaviour
         }
     }
 
+    private EnemyState m_EnemyState;
+    public EnemyState EnemyState
+    {
+        get
+        {
+            if (m_EnemyState == null)
+            {
+                m_EnemyState = GetComponent<EnemyState>();
+            }
+            return m_EnemyState;
+        }
+    }
+
     private void Start()
     {
         pathFinder = GetComponent<PathFinder>();
@@ -35,11 +49,21 @@ public class EnemyPlayer : MonoBehaviour
         playerScanner.OnScanReady += Scanner_OnScanReady;
         Scanner_OnScanReady();
         EnemyHealth.OnDeath += EnemyHealth_OnDeath;
+        EnemyState.OnModeChanged += EnemyState_OnModeChanged;
+    }
+
+    private void EnemyState_OnModeChanged(EnemyState.EMode state)
+    {
+        pathFinder.Agent.speed = settings.WalkSpeed;
+        if (state == EnemyState.EMode.AWARE)
+        {
+            pathFinder.Agent.speed = settings.RunSpeed;
+        }
     }
 
     private void EnemyHealth_OnDeath()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     private void Scanner_OnScanReady()
@@ -63,8 +87,6 @@ public class EnemyPlayer : MonoBehaviour
             }
         }
     }
-
-    
 
     private void SelectClosestTarget()
     {
