@@ -40,10 +40,7 @@ public class PlayerState : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.Instance.EventBus.AddListener("CoverToggle", new EventBus.EventListener()
-        {
-            Method = ToggleCover
-        });
+        GameManager.Instance.EventBus.AddListener("CoverToggle", ToggleCover);
     }
 
     void ToggleCover()

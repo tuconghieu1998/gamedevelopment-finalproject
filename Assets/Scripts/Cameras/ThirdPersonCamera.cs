@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
@@ -57,7 +54,21 @@ public class ThirdPersonCamera : MonoBehaviour
             localPlayer.transform.up * targetHeight +
             localPlayer.transform.right * cameraRig.CameraOffset.x;
 
+        Vector3 collisionDestination = cameraLookTarget.position + localPlayer.transform.up * targetHeight - localPlayer.transform.forward * .5f;
+
+        HandleCameraCollision(collisionDestination, ref targetPosition);
+
         transform.position = Vector3.Lerp(transform.position, targetPosition, cameraRig.Damping * Time.deltaTime);
         transform.rotation = Quaternion.Lerp(transform.rotation, cameraLookTarget.rotation, cameraRig.Damping * Time.deltaTime);
+    }
+
+    private void HandleCameraCollision(Vector3 toTarget, ref Vector3 fromTarget)
+    {
+        RaycastHit hit;
+        if (Physics.Linecast(toTarget, fromTarget, out hit))
+        {
+            Vector3 hitPoint = new Vector3(hit.point.x + hit.normal.x * .2f, hit.point.y, hit.point.z + hit.normal.z * .2f);
+            fromTarget = new Vector3(hitPoint.x, fromTarget.y, hitPoint.z);
+        }
     }
 }

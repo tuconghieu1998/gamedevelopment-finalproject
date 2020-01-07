@@ -8,16 +8,6 @@ public class AmmoPickup : PickupItem
     [SerializeField] float respawnTime;
     [SerializeField] int amount;
 
-    public void Start()
-    {
-        GameManager.Instance.EventBus.AddListener("EnemyDeath", new EventBus.EventListener()
-        {
-            Method = () =>
-            {
-                print("Enemy Death Listener"+name);
-            }
-        });
-    }
     public override void OnPickUp(Transform item)
     {
         var playerInventory = item.GetComponentInChildren<Container>();
