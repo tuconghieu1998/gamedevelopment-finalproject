@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Shared.Extensions;
 
 [RequireComponent(typeof(SphereCollider))]
 public class Scanner : MonoBehaviour
@@ -58,29 +59,12 @@ public class Scanner : MonoBehaviour
             var player = results[i].transform.GetComponent<T>();
             if (player == null) 
                 continue;
-            if (!IsInLineOfSight(Vector3.up, results[i].transform.position))
+            if (!transform.IsInLineOfSight(results[i].transform.position, fieldOfView, mask, Vector3.up))
                 continue;
 
             targets.Add(player);
         }
         PrepareScan();
         return targets;
-    }
-
-    bool IsInLineOfSight(Vector3 eyeHeight, Vector3 targetPosition)
-    {
-        Vector3 direction = targetPosition - transform.position;
-        if (Vector3.Angle(transform.forward, direction.normalized) < fieldOfView / 2)
-        {
-            float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
-
-            //bị cản tầm nhìn
-            if (Physics.Raycast(transform.position + eyeHeight +transform.forward*.3f, direction.normalized, distanceToTarget, mask))
-            {
-                return false;
-            }
-            return true;
-        }
-        return false;
     }
 }
