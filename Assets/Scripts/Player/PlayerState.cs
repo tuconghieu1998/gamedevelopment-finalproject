@@ -9,7 +9,8 @@ public class PlayerState : MonoBehaviour
         WALKING,
         RUNNING,
         CROUCHING,
-        SPRINTING
+        SPRINTING,
+        COVER
     }
 
     public enum EWeaponState
@@ -22,6 +23,7 @@ public class PlayerState : MonoBehaviour
 
     public EMoveState MoveState;
     public EWeaponState WeaponState;
+    bool isInCover = false;
 
     private InputController m_InputController;
     public InputController InputController
@@ -34,6 +36,19 @@ public class PlayerState : MonoBehaviour
             }
             return m_InputController;
         }
+    }
+
+    private void Awake()
+    {
+        GameManager.Instance.EventBus.AddListener("CoverToggle", new EventBus.EventListener()
+        {
+            Method = ToggleCover
+        });
+    }
+
+    void ToggleCover()
+    {
+        isInCover = !isInCover;
     }
 
     private void Update()
@@ -62,6 +77,8 @@ public class PlayerState : MonoBehaviour
             MoveState = EMoveState.WALKING;
         if (InputController.isCrouched)
             MoveState = EMoveState.CROUCHING;
+        if (isInCover)
+            MoveState = EMoveState.COVER;
 
     }
 }

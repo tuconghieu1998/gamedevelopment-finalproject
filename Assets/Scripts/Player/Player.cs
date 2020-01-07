@@ -88,6 +88,7 @@ public class Player : MonoBehaviour
         }
     }
 
+
     // Update is called once per frame
     void Update()
     {
@@ -113,6 +114,11 @@ public class Player : MonoBehaviour
         if (playerInput.isCrouched)
         {
             moveSpeed = settings.CrouchSpeed;
+        }
+
+        if (PlayerState.MoveState == PlayerState.EMoveState.COVER)
+        {
+            moveSpeed = settings.WalkSpeed;
         }
 
         Vector2 direction = new Vector2(playerInput.Vertical * moveSpeed, playerInput.Horizontal * moveSpeed);

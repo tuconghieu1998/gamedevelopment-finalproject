@@ -12,23 +12,54 @@ public class PlayerCover : MonoBehaviour
     [SerializeField] int numberOfRays;
     [SerializeField] LayerMask coverMask;
 
+    bool isAiming
+    {
+        get
+        {
+            return GameManager.Instance.LocalPlayer.PlayerState.WeaponState == PlayerState.EWeaponState.AIMING ||
+                GameManager.Instance.LocalPlayer.PlayerState.WeaponState == PlayerState.EWeaponState.AIMEDFIRING;
+        }
+    }
+
     internal void SetPlayerCoverAllowed(bool value)
     {
         canTakeCover = value;
+        if(!canTakeCover && isInCover)
+        {
+            ExecuteCoverToggle();
+        }
     }
 
     private void Update()
     {
+        if(isAiming && isInCover)
+        {
+            ExecuteCoverToggle();
+            return;
+        }
         if (!canTakeCover)
             return;
         
-        if(Input.GetKeyDown(KeyCode.F))
+        if(GameManager.Instance.InputController.CoverToggle)
         {
-            FindCoverAroundPlayer();
-            if (closestHit.distance == 0)
-                return;
-            transform.rotation = Quaternion.LookRotation(closestHit.normal) * Quaternion.Euler(0, 180f, 0);
+            TakeCover();
         }
+    }
+
+    void TakeCover()
+    {
+        FindCoverAroundPlayer();
+        if (closestHit.distance == 0)
+            return;
+
+        ExecuteCoverToggle();
+    }
+
+    void ExecuteCoverToggle()
+    {
+        isInCover = !isInCover;
+        GameManager.Instance.EventBus.RaiseEvent("CoverToggle");
+        transform.rotation = Quaternion.LookRotation(closestHit.normal) * Quaternion.Euler(0, 180f, 0);
     }
 
     private void FindCoverAroundPlayer()

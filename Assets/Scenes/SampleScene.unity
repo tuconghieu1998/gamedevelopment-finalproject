@@ -9960,7 +9960,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
+  m_Size: {x: 1, y: 1, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1412644563 stripped
 Transform:
@@ -16476,7 +16476,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: 32bc985e4399f134f9879586ba0259f6,
         type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6057140222963153312, guid: 32bc985e4399f134f9879586ba0259f6,
         type: 3}

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour
 {
     Animator animator;
+    bool isInCover = false;
+
     private PlayerAim m_playerAim;
     public PlayerAim PlayerAim
     {
@@ -21,6 +23,7 @@ public class PlayerAnimation : MonoBehaviour
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        
     }
 
     // Update is called once per frame
@@ -34,7 +37,9 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("IsCrouched", GameManager.Instance.InputController.isCrouched);
 
         animator.SetFloat("AimAngle", PlayerAim.GetAngle());
-        animator.SetBool("IsAiming", GameManager.Instance.LocalPlayer.PlayerState.WeaponState == PlayerState.EWeaponState.AIMING ||
+        animator.SetBool("IsAiming", 
+             GameManager.Instance.LocalPlayer.PlayerState.WeaponState == PlayerState.EWeaponState.AIMING ||
              GameManager.Instance.LocalPlayer.PlayerState.WeaponState == PlayerState.EWeaponState.AIMEDFIRING);
+        animator.SetBool("IsInCover", GameManager.Instance.LocalPlayer.PlayerState.MoveState == PlayerState.EMoveState.COVER);
     }
 }

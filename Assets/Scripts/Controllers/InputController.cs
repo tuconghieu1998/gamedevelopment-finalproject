@@ -15,6 +15,7 @@ public class InputController : MonoBehaviour
     public bool isCrouched;
     public bool MouseWheelUp;
     public bool MouseWheelDown;
+    public bool CoverToggle;
 
     void Update()
     {
@@ -24,6 +25,7 @@ public class InputController : MonoBehaviour
         Fire1 = Input.GetButton("Fire1");
         Fire2 = Input.GetButton("Fire2");
         Reload = Input.GetKey(KeyCode.R);
+        CoverToggle = Input.GetKeyDown(KeyCode.F);
         isWalking = Input.GetKey(KeyCode.LeftAlt);
         isSprinting = Input.GetKey(KeyCode.LeftShift);
         isCrouched = Input.GetKey(KeyCode.C);
