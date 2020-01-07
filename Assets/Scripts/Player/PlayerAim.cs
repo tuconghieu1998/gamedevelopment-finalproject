@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
+    [SerializeField] float minAngle;
+    [SerializeField] float maxAngle;
     public void SetRotation(float amount)
     {
-        transform.eulerAngles = new Vector3(transform.eulerAngles.x - amount, transform.eulerAngles.y, transform.eulerAngles.z);
+        float clamedAngle = GetClamedAngle(amount);
+        transform.eulerAngles = new Vector3(clamedAngle, transform.eulerAngles.y, transform.eulerAngles.z);
+    }
+
+    private float GetClamedAngle(float amount)
+    {
+        float newAngle = CheckAngle(transform.eulerAngles.x - amount);
+        float clamedAngle = Mathf.Clamp(newAngle, minAngle, maxAngle);
+        return clamedAngle;
     }
 
     public float GetAngle()

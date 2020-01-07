@@ -9,5 +9,6 @@ public class EnemyHealth : Destructable
     {
         base.Die();
         ragdoll.EnableRagdoll(true);
+        GameManager.Instance.EventBus.RaiseEvent("EnemyDeath");
     }
 }

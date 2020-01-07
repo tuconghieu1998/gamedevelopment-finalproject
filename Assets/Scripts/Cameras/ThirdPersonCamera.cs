@@ -28,7 +28,7 @@ public class ThirdPersonCamera : MonoBehaviour
     private void HandleOnLocalPlayerJoined(Player player)
     {
         localPlayer = player;
-        cameraLookTarget = localPlayer.transform.Find("cameraLookTarget");
+        cameraLookTarget = localPlayer.transform.Find("AimPivot");
 
         if(cameraLookTarget == null)
         {
@@ -57,8 +57,7 @@ public class ThirdPersonCamera : MonoBehaviour
             localPlayer.transform.up * targetHeight +
             localPlayer.transform.right * cameraRig.CameraOffset.x;
 
-        Quaternion targetRotation = Quaternion.LookRotation(cameraLookTarget.position - targetPosition, Vector3.up);
         transform.position = Vector3.Lerp(transform.position, targetPosition, cameraRig.Damping * Time.deltaTime);
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, cameraRig.Damping * Time.deltaTime);
+        transform.rotation = Quaternion.Lerp(transform.rotation, cameraLookTarget.rotation, cameraRig.Damping * Time.deltaTime);
     }
 }
