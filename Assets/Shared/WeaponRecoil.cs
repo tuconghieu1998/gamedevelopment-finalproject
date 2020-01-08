@@ -33,6 +33,20 @@ public class WeaponRecoil : MonoBehaviour
         }
     }
 
+    Crosshair m_Crosshair;
+    Crosshair Crosshair
+    {
+        get
+        {
+            if (m_Crosshair == null)
+            {
+                m_Crosshair = GameManager.Instance.LocalPlayer.playerAim.GetComponentInChildren<Crosshair>();
+            }
+            return m_Crosshair;
+        }
+    }
+
+
     public void Activate()
     {
         nextRecoilCooldown = Time.time + recoilCooldown;
@@ -44,8 +58,7 @@ public class WeaponRecoil : MonoBehaviour
         {
             //giữ nút bắn liên tục
             recoilActiveTime += Time.deltaTime;
-            float percentage = recoilActiveTime / recoilSpeed;
-            percentage = Mathf.Clamp01(percentage);
+            float percentage = getPercentage();
 
             Vector3 recoilAmount = Vector3.zero;
             for(int i = 0; i < layers.Length; i++)
@@ -53,6 +66,7 @@ public class WeaponRecoil : MonoBehaviour
                 recoilAmount += layers[i].direction * layers[i].curve.Evaluate(percentage);
             }
             this.Shooter.AimTargetOffset = Vector3.Lerp(Shooter.AimTargetOffset, Shooter.AimTargetOffset + recoilAmount, strength * Time.deltaTime);
+            this.Crosshair.ApplyScale(percentage * Random.Range(strength * 7, strength * 9));
         }
         else
         {
@@ -62,10 +76,18 @@ public class WeaponRecoil : MonoBehaviour
             {
                 recoilActiveTime = 0;
             }
+            this.Crosshair.ApplyScale(getPercentage());
             if(recoilActiveTime == 0)
             {
                 this.Shooter.AimTargetOffset = Vector3.zero;
+                this.Crosshair.ApplyScale(0);
             }
         }
+    }
+
+    float getPercentage()
+    {
+        float percentage = recoilActiveTime / recoilSpeed;
+        return Mathf.Clamp01(percentage);
     }
 }
