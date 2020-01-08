@@ -16,6 +16,19 @@ public class Shooter : MonoBehaviour
     public WeaponReloader reloader;
     private ParticleSystem muzzleFireParticleSystem;
 
+    private WeaponRecoil m_WeaponRecoil;
+    private WeaponRecoil WeaponRecoil
+    {
+        get
+        {
+            if(m_WeaponRecoil == null)
+            {
+                m_WeaponRecoil = GetComponent<WeaponRecoil>();
+            }
+            return m_WeaponRecoil;
+        }
+    }
+
     float nextFireAllowed;
     public bool canFire;
     Transform muzzle;
@@ -70,11 +83,32 @@ public class Shooter : MonoBehaviour
             reloader.TakeFromClip(1);
         }
         nextFireAllowed = Time.time + rateOfFire;
-        muzzle.LookAt(AimTarget.position + AimTargetOffset);
-        FireEffect();
+        bool isLocalPlayerControlled = AimTarget == null;
+        if (!isLocalPlayerControlled)
+        {
+            muzzle.LookAt(AimTarget.position + AimTargetOffset);
+        }
 
+        Projectile newBullet = (Projectile)Instantiate(projectile, muzzle.position, muzzle.rotation);
+        if (isLocalPlayerControlled)
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(.5f, .5f, 0));
+            RaycastHit hit;
+            Vector3 targetPosition = ray.GetPoint(500);
+            if(Physics.Raycast(ray,out hit))
+            {
+                targetPosition = hit.point;
+            }
+            newBullet.transform.LookAt(targetPosition + AimTargetOffset);
+        }
+        if (this.WeaponRecoil)
+        {
+            this.WeaponRecoil.Activate();
+        }
+
+        FireEffect();
         // instantiate the projectile
-        Instantiate(projectile, muzzle.position, muzzle.rotation);
+        
         audioFire.Play();
         canFire = true;
     }
