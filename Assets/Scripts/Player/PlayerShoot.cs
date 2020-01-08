@@ -20,7 +20,7 @@ public class PlayerShoot : WeaponController
 
     void Update()
     {
-        if (!IsPlayerAlive)
+        if (!IsPlayerAlive ||GameManager.Instance.IsPaused)
         {
             return;
         }
@@ -39,7 +39,12 @@ public class PlayerShoot : WeaponController
         if (GameManager.Instance.InputController.Fire1)
         {
             ActiveWeapon.Fire();
-        }    
+        }
+
+        if (GameManager.Instance.InputController.Reload)
+        {
+            ActiveWeapon.Reload();
+        }
     }
 
 }

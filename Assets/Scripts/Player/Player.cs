@@ -92,8 +92,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PlayerHealth.isAlive)
+        if (!PlayerHealth.isAlive || GameManager.Instance.IsPaused)
+        {
             return;
+        }
         Move();
         LookAround();
     }   
@@ -123,7 +125,6 @@ public class Player : MonoBehaviour
 
         Vector2 direction = new Vector2(playerInput.Vertical * moveSpeed, playerInput.Horizontal * moveSpeed);
         MoveController.SimpleMove(transform.forward * direction.x + transform.right * direction.y);
-        print(Vector3.Distance(transform.position, previousPosition));
         if (Vector3.Distance(transform.position, previousPosition) > minimumMoveTreshold)
         {
             footSteps.Play();

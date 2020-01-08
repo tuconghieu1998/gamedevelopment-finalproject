@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyState))]
 public class EnemyPlayer : MonoBehaviour
 {   
-    [SerializeField] Scanner playerScanner;
+    [SerializeField] public Scanner playerScanner;
     [SerializeField] SwatSoldier settings;
 
     PathFinder pathFinder;
@@ -61,6 +62,30 @@ public class EnemyPlayer : MonoBehaviour
         }
     }
 
+    void CheckEaseWeapon()
+    {
+        // kiểm tra để enemy dừng bắn
+        if (priorityTarget != null)
+            return;
+        this.EnemyState.CurrentMode = EnemyState.EMode.UNAWARE;
+    }
+
+    void CheckContinuePatrol()
+    {
+        if (priorityTarget != null)
+            return;
+        pathFinder.Agent.isStopped = false;
+    }
+
+    internal void ClearTargetAndScan()
+    {
+        priorityTarget = null;
+        GameManager.Instance.Timer.Add(CheckEaseWeapon, UnityEngine.Random.Range(3, 6));
+        GameManager.Instance.Timer.Add(CheckContinuePatrol, UnityEngine.Random.Range(12, 16));
+
+        Scanner_OnScanReady();
+    }
+
     private void EnemyHealth_OnDeath()
     {
         
@@ -83,6 +108,7 @@ public class EnemyPlayer : MonoBehaviour
         {
             if (OnTargetSelected != null)
             {
+                this.EnemyState.CurrentMode = EnemyState.EMode.AWARE;
                 OnTargetSelected(priorityTarget);
             }
         }
@@ -102,7 +128,7 @@ public class EnemyPlayer : MonoBehaviour
 
     private void Update()
     {
-        if(priorityTarget == null)
+        if(priorityTarget == null || !EnemyHealth.isAlive)
         {
             return;
         }

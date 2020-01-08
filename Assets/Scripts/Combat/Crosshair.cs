@@ -24,10 +24,20 @@ public class Crosshair : MonoBehaviour
         reticleStartPoint = crossTop.localPosition.y;
     }
 
+    void SetVisibility(bool value)
+    {
+        Reticle.gameObject.SetActive(value);
+    }
+
     private void Update()
     {
-        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
-        Reticle.transform.position = Vector3.Lerp(Reticle.transform.position, screenPosition, speed * Time.deltaTime);
+        SetVisibility(false);
+        if (GameManager.Instance.InputController.Fire2)
+        {
+            SetVisibility(true);
+            Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+            Reticle.transform.position = Vector3.Lerp(Reticle.transform.position, screenPosition, speed * Time.deltaTime);
+        }
     }
 
     public void ApplyScale(float scale)

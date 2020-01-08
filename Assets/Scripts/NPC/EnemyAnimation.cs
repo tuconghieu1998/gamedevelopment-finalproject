@@ -12,6 +12,19 @@ public class EnemyAnimation : MonoBehaviour
     PathFinder pathFinder;
     EnemyPlayer enemyPlayer;
 
+    private bool m_IsCrouched;
+    public bool IsCrouched
+    {
+        get
+        {
+            return m_IsCrouched;
+        }
+        internal set
+        {
+            m_IsCrouched = true;
+            GameManager.Instance.Timer.Add(CheckIsSaveToStandUp, 25);
+        }
+    }
     private void Awake()
     {
         pathFinder = GetComponent<PathFinder>();
@@ -24,5 +37,14 @@ public class EnemyAnimation : MonoBehaviour
         lastPosition = transform.position;
         animator.SetBool("IsWalking", enemyPlayer.EnemyState.CurrentMode == EnemyState.EMode.UNAWARE);
         animator.SetFloat("Vertical", velocity / pathFinder.Agent.speed);
+        animator.SetBool("IsAiming", enemyPlayer.EnemyState.CurrentMode == EnemyState.EMode.AWARE);
+        animator.SetBool("IsCrouched", IsCrouched);
+    }
+
+    void CheckIsSaveToStandUp()
+    {
+        bool isUnaware = enemyPlayer.EnemyState.CurrentMode == EnemyState.EMode.UNAWARE;
+        if (isUnaware)
+            IsCrouched = false;
     }
 }

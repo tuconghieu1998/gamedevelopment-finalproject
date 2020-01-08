@@ -40,12 +40,19 @@ public class EnemyPatrol : MonoBehaviour
 
     private void EnemyPlayer_OnTargetSelected(Player obj)
     {
-        pathFinder.Agent.isStopped = true;
+        if (pathFinder.Agent.isActiveAndEnabled) 
+        {
+            pathFinder.Agent.isStopped = true;
+        }
     }
 
     private void EnemyHealth_OnDeath()
     {
-        pathFinder.Agent.isStopped = true;
+        if (pathFinder.Agent.isActiveAndEnabled)
+        {
+            pathFinder.Agent.isStopped = true;
+        }
+        
     }
 
     private void WaypointController_OnWaypointChanged(Waypoint waypoint)
