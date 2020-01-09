@@ -31,7 +31,7 @@ public class InputController : MonoBehaviour
         isSprinting = Input.GetKey(KeyCode.LeftShift);
         Escape = Input.GetKey(KeyCode.Escape);
         isCrouched = Input.GetKey(KeyCode.C);
-        MouseWheelUp = Input.GetAxis("Mouse ScrollWheel") > 0;
+        MouseWheelUp = Input.GetKeyDown(KeyCode.Tab);
         MouseWheelDown = Input.GetAxis("Mouse ScrollWheel") < 0;
     }
 }

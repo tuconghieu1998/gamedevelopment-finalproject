@@ -55,8 +55,9 @@ public class WeaponController : MonoBehaviour
         }
         GameManager.Instance.Timer.Add(() =>
         {
-            Equip(currentWeaponIndex);
+            Equip(currentWeaponIndex);            
         }, weaponSwitchTime);
+        ActiveWeapon.audioSwitchWeapon.Play();
 
     }
 

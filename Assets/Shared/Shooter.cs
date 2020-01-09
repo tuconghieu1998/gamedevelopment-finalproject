@@ -9,7 +9,8 @@ public class Shooter : MonoBehaviour
     [SerializeField] Transform hand;
     [SerializeField] AudioController audioReload;
     [SerializeField] AudioController audioFire;
-    
+    [SerializeField] public AudioController audioSwitchWeapon;
+
     public Transform AimTarget;
     public Vector3 AimTargetOffset;
 
@@ -34,12 +35,20 @@ public class Shooter : MonoBehaviour
     Transform muzzle;
 
     public void Equip()
-    {
+    {        
         transform.SetParent(hand);
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+        //audioSwitchWeapon.Play();
+        //StartCoroutine(WaitForSound());
+        //WaitForSeconds(audioSwitchWeapon.length);
+        //print("Switch");
     }
-
+    //public IEnumerator WaitForSound()
+    //{
+    //    yield return new WaitUntil(() => audioSwitchWeapon.isPlaying() == false);
+    //    // or yield return new WaitWhile(() => audiosource.isPlaying == true)
+    //}
     void Awake()
     {
         muzzle = transform.Find("Model/Muzzle");

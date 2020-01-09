@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioController : MonoBehaviour
 {
-    [SerializeField] AudioClip[] clips;
+    [SerializeField] public AudioClip[] clips;
     [SerializeField] float delayBetweenClips;
 
     bool canPlay;
@@ -15,6 +15,11 @@ public class AudioController : MonoBehaviour
     {
         source = GetComponent<AudioSource>();
         canPlay = true;
+    }
+
+    public bool isPlaying()
+    {
+        return source.isPlaying;
     }
 
     public void Play()

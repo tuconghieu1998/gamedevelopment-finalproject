@@ -43,4 +43,11 @@ public class AmmoCounter : MonoBehaviour
     {
         
     }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnLocalPlayerJoined -= HandleOnLocalPlayerJoined;
+        playerShoot.OnWeaponSwitch -= HandleOnWeaponSwitch;
+        reloader.OnAmmoChanged -= HandleOnAmmoChanged;
+    }
 }
