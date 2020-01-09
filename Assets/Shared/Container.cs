@@ -98,6 +98,17 @@ public class Container : MonoBehaviour
         return containerItem.Remaining;
     }
 
+    public bool isOverAmount(System.Guid id)
+    {
+        var containerItem = GetContainerItem(id);
+        if (containerItem == null)
+        {
+            return false;
+        }
+
+        return containerItem.amountTaken == containerItem.Maximum;
+    }
+
     private ContainerItem GetContainerItem(System.Guid id)
     {
         var containerItem = items.Where(x => x.Id == id).FirstOrDefault();

@@ -48,17 +48,25 @@ public class WeaponReloader : MonoBehaviour
         };
     }
 
-    public void Reload()
+    public bool Reload()
     {
         if (isReloading)
-            return;
+            return false;
+        
+        int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
+
+
+        if (inventory.isOverAmount(containerItemId) || amountFromInventory == 0)
+        {
+            return false;
+        }
+
         isReloading = true;
-        // int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
 
         GameManager.Instance.Timer.Add(()=> {
             ExecuteReLoad(inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip));
         }, reloadTime);
-        
+        return true;
     }
 
     private void ExecuteReLoad(int amount)

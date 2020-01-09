@@ -54,10 +54,10 @@ public class Scanner : MonoBehaviour
     {
         List<T> targets = new List<T>();
         Collider[] results = Physics.OverlapSphere(transform.position, ScanRange);
-        for(int i = 0; i < results.Length; i++)
+        for (int i = 0; i < results.Length; i++)
         {
             var player = results[i].transform.GetComponent<T>();
-            if (player == null) 
+            if (player == null)
                 continue;
             if (!transform.IsInLineOfSight(results[i].transform.position, fieldOfView, mask, Vector3.up))
                 continue;

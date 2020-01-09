@@ -62,8 +62,11 @@ public class Shooter : MonoBehaviour
         {
             return;
         }
-        reloader.Reload();
+        bool success = reloader.Reload();
+        if (success)
+        {
         audioReload.Play();
+        }
     }
 
     void FireEffect()
