@@ -2548,6 +2548,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitPoints: 3
+  damageTaken: 0
   ragdoll: {fileID: 7081698148653738763}
 --- !u!114 &7081698149234326846
 MonoBehaviour:
@@ -3187,7 +3188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scanSpeed: 1
-  fieldOfView: 90
+  fieldOfView: 120
   mask:
     serializedVersion: 2
     m_Bits: 55

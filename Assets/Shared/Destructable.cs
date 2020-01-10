@@ -10,7 +10,7 @@ public class Destructable : MonoBehaviour
     public event System.Action OnDeath;
     public event System.Action OnDamageReceived;
 
-    float damageTaken;
+    public float damageTaken;
 
     public float HitPointRemaining
     {

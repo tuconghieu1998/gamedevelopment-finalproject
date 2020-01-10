@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : Destructable
@@ -15,6 +16,7 @@ public class PlayerHealth : Destructable
         int spawnIndex = Random.Range(0, spawnPoints.Length);
         transform.position = spawnPoints[spawnIndex].transform.position;
         transform.rotation = spawnPoints[spawnIndex].transform.rotation;
+        //damageTaken = 0;
     }
 
     public override void Die()
@@ -22,6 +24,8 @@ public class PlayerHealth : Destructable
         base.Die();
         ragdoll.EnableRagdoll(true);
         //SpawnAtNewSpawnPoint();
+        //ragdoll.EnableRagdoll(false);
+        //SceneManager.LoadScene("MainMenu");
     }
 
     public override void TakeDamage(float amount)

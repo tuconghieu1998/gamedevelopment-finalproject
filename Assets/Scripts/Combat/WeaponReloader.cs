@@ -52,11 +52,11 @@ public class WeaponReloader : MonoBehaviour
     {
         if (isReloading)
             return false;
-        
-        int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
+
+        //int amountFromInventory = inventory.TakeFromContainer(containerItemId, clipSize - RoundsRemainingInClip);
 
 
-        if (inventory.isOverAmount(containerItemId) || amountFromInventory == 0)
+        if (inventory.isOverAmount(containerItemId))
         {
             return false;
         }
