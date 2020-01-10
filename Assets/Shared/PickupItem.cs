@@ -9,8 +9,10 @@ public class PickupItem : MonoBehaviour
     {
         if(collider.tag != "Player")
         {
+            print("Not Player");
             return;
         }
+        print("Collider");
         PickUp(collider.transform);
     }
 

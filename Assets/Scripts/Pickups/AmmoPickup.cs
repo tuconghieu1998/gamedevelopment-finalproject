@@ -10,6 +10,7 @@ public class AmmoPickup : PickupItem
 
     public override void OnPickUp(Transform item)
     {
+        print("Container");
         var playerInventory = item.GetComponentInChildren<Container>();
         GameManager.Instance.Respawner.Despawn(gameObject, respawnTime);
         playerInventory.Put(weaponType.ToString(), amount);

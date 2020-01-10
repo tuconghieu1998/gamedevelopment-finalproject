@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] Button StartGameButton;
     [SerializeField] Button QuitGameButton;
     public string levelName;
+    public GameObject optionScreen;
     private void Start()
     {
         StartGameButton.onClick.AddListener(()=> {
@@ -25,5 +26,10 @@ public class MainMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void OpenOption()
+    {
+        optionScreen.SetActive(true);
     }
 }

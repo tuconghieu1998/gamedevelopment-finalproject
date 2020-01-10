@@ -32,6 +32,7 @@ public class AmmoCounter : MonoBehaviour
 
     void HandleOnAmmoChanged()
     {
+        print("Change");//tesst
         int amountInInventory = reloader.RoundsRemainingInInventory;
         int amountInClip = reloader.RoundsRemainingInClip;
         text.text = string.Format("{0}/{1}", amountInClip, amountInInventory);
