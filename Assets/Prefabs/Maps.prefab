@@ -917,6 +917,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2402128600180595689}
+  - component: {fileID: 3147566635417962802}
   m_Layer: 0
   m_Name: Ladder
   m_TagString: Untagged
@@ -931,15 +932,28 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2402128600180595688}
-  m_LocalRotation: {x: -0.22903965, y: -0, z: -0, w: 0.9734171}
-  m_LocalPosition: {x: -16.067207, y: 59.894478, z: 128.0834}
+  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
+  m_LocalPosition: {x: -16.067207, y: 60.95, z: 127.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6104807295681028226}
   - {fileID: 6104807296068948945}
   m_Father: {fileID: 2402128600027440670}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -26.481, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
+--- !u!65 &3147566635417962802
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2402128600180595688}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.1860886, y: 6.766627, z: 0.21380234}
+  m_Center: {x: -7.227413, y: -1.3199159, z: -8.513946}
 --- !u!1 &2402128600249382507
 GameObject:
   m_ObjectHideFlags: 0

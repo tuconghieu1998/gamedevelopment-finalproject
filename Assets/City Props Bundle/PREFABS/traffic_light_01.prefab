@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3210173421008998887}
   - component: {fileID: 5897416470831000529}
   - component: {fileID: 210363390032385832}
+  - component: {fileID: 1607719410551823591}
+  - component: {fileID: 5398468470044655231}
   m_Layer: 0
   m_Name: traffic_light_01
   m_TagString: Untagged
@@ -78,3 +80,29 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1607719410551823591
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934166775217431540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.23599243, y: 5.665842, z: 0.28885078}
+  m_Center: {x: 0.0030517578, y: 2.832921, z: -0.0511446}
+--- !u!65 &5398468470044655231
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934166775217431540}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.0601668, y: 0.45362186, z: 0.44556046}
+  m_Center: {x: 1.3619163, y: 5.210809, z: 0.04600334}
